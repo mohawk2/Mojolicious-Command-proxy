@@ -2,6 +2,7 @@ package Mojolicious::Command::proxy;
 use Mojo::Base 'Mojolicious::Command';
 use Mojo::Util qw(getopt);
 use Mojo::URL;
+use Mojolicious::Routes;
 
 our $VERSION = '0.001';
 
@@ -18,6 +19,7 @@ sub run {
   die $self->usage . "from must be blank or start '/', then something"
     if $from !~ m#^(?:$|/.)#;
   my $app = $self->app;
+  $app->routes(Mojolicious::Routes->new) if ref $app eq 'Mojo::HelloWorld';
   $self->proxy($app, $from, $to);
   $app->start(@args);
 }
@@ -96,6 +98,12 @@ development server is running elsewhere.
 
 Run this command. It will add a L</proxy> route as below. If not supplied,
 the C<$from> will be empty-string.
+
+As a special case, if the C<app> attribute is exactly a
+L<Mojo::HelloWorld> app, it will replace its C<routes> attribute with an
+empty one first, since the C<whatever> route clashes with the proxy route,
+being also a match-everything wildcard route. This makes the C<mojo proxy>
+invocation function as expected.
 
 =head2 proxy
 

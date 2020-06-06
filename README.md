@@ -52,6 +52,12 @@ development server is running elsewhere.
 Run this command. It will add a ["proxy"](#proxy) route as below. If not supplied,
 the `$from` will be empty-string.
 
+As a special case, if the `app` attribute is exactly a
+[Mojo::HelloWorld](https://metacpan.org/pod/Mojo::HelloWorld) app, it will replace its `routes` attribute with an
+empty one first, since the `whatever` route clashes with the proxy route,
+being also a match-everything wildcard route. This makes the `mojo proxy`
+invocation function as expected.
+
 ## proxy
 
     Mojolicious::Command::proxy->proxy($app, $from_prefix, $to_prefix);
