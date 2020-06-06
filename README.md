@@ -52,6 +52,9 @@ development server is running elsewhere.
 Run this command. It will add a ["proxy"](#proxy) route as below. If not supplied,
 the `$from` will be empty-string.
 
+Command-line arguments will only be parsed at the start of the
+command-line. This allows you to pass option through to e.g. `daemon`.
+
 As a special case, if the `app` attribute is exactly a
 [Mojo::HelloWorld](https://metacpan.org/pod/Mojo::HelloWorld) app, it will replace its `routes` attribute with an
 empty one first, since the `whatever` route clashes with the proxy route,

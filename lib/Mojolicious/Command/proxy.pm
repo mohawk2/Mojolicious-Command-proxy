@@ -11,7 +11,7 @@ has usage => sub { shift->extract_usage . "\n" };
 
 sub run {
   my ($self, @args) = @_;
-  getopt \@args,
+  getopt \@args, [qw(no_permute pass_through)],
     'f|from=s' => \my $from;
   $from ||= '';
   my $to = shift @args;
@@ -100,6 +100,9 @@ development server is running elsewhere.
 
 Run this command. It will add a L</proxy> route as below. If not supplied,
 the C<$from> will be empty-string.
+
+Command-line arguments will only be parsed at the start of the
+command-line. This allows you to pass option through to e.g. C<daemon>.
 
 As a special case, if the C<app> attribute is exactly a
 L<Mojo::HelloWorld> app, it will replace its C<routes> attribute with an
