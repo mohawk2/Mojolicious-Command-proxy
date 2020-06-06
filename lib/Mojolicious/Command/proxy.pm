@@ -26,10 +26,12 @@ sub run {
 
 sub proxy {
   my ($self, $app, $from, $to) = @_;
+  $from ||= '/';
   $app->routes->any("$from*path" => { path => "" } => sub {
     my ($c) = @_;
     my $req = $c->req;
     my $path = $c->stash('path');
+    $path = '/' . $path if $from eq '/'; # weird special behaviour by router
     my $onward_url = $to . $path;
     my $onward_tx = $app->ua->build_tx($req->method => $onward_url);
     $onward_tx->req->content($req->content); # headers and body
@@ -114,7 +116,8 @@ will transparently proxy all matching requests to the give C<$to>,
 with all the same headers both ways.
 
 It operates by simply appending everything after the C<$from_prefix>,
-which I<can> be an empty string, to the C<$to_prefix>. E.g.:
+which I<can> be an empty string (which is treated the same as solitary
+C</>, doing what you'd expect), to the C<$to_prefix>. E.g.:
 
   $cmd->proxy($app, '', '/subdir'); # /2 -> /subdir/2, / -> /subdir/ i.e. all
   $cmd->proxy($app, '/proxy', '/subdir'); # /proxy/2 -> /subdir/2

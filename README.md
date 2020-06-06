@@ -67,7 +67,8 @@ will transparently proxy all matching requests to the give `$to`,
 with all the same headers both ways.
 
 It operates by simply appending everything after the `$from_prefix`,
-which _can_ be an empty string, to the `$to_prefix`. E.g.:
+which _can_ be an empty string (which is treated the same as solitary
+`/`, doing what you'd expect), to the `$to_prefix`. E.g.:
 
     $cmd->proxy($app, '', '/subdir'); # /2 -> /subdir/2, / -> /subdir/ i.e. all
     $cmd->proxy($app, '/proxy', '/subdir'); # /proxy/2 -> /subdir/2
