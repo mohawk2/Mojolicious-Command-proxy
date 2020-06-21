@@ -4,7 +4,7 @@ use Mojo::Util qw(getopt);
 use Mojo::URL;
 use Mojolicious::Routes;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 has description => 'Proxy web requests elsewhere';
 has usage => sub { shift->extract_usage . "\n" };
