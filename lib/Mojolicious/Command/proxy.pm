@@ -31,6 +31,8 @@ sub proxy {
     my ($c) = @_;
     my $req = $c->req;
     my $path = $c->stash('path');
+    my $query = $c->req->url->query->to_string;
+    $path = join '?', grep length, $path, $query;
     $path = '/' . $path if $from eq '/'; # weird special behaviour by router
     my $onward_url = $to . $path;
     my $onward_tx = $app->ua->build_tx($req->method => $onward_url);

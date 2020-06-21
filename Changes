@@ -1,2 +1,4 @@
+- no drop query params when proxying
+
 0.001 2020-06-06
  - first version
