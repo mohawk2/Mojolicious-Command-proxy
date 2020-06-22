@@ -1,3 +1,5 @@
+- counter URL-unescaping of input paths by re-escaping normal but not "/"
+
 0.002 2020-06-22
 - no drop query params when proxying
 

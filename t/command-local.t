@@ -16,5 +16,6 @@ Mojolicious::Command::proxy->proxy(app, '', '/subdir'); # more specific first
 $t->get_ok('/proxy/2')->content_like(qr/ID: 2/);
 $t->get_ok('/2')->content_like(qr/ID: 2/);
 $t->get_ok('/2?x=hello')->content_like(qr/x=hello/);
+$t->get_ok('/%253A')->content_like(qr/ID: %3A/);
 
 done_testing;
