@@ -33,7 +33,7 @@ sub proxy {
     my $path = $c->stash('path');
     $path = url_escape $path, '^A-Za-z0-9\-._~/'; # route in unescapes, escaping normal stuff except "/" seems reasonable
     my $query = $c->req->url->query->to_string;
-    $path = join '?', grep length, $path, $query;
+    $path = join '?', $path, grep length, $query;
     $c->app->log->debug("Proxying '$path'");
     $path = '/' . $path if $from eq '/'; # weird special behaviour by router
     my $onward_url = $to . $path;
